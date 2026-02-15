@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (
+  await getCollection('blog', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+  })
+).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title="Blog | Yonas Stephen" description="Thoughts and learnings">
+  <section class="container page">
+    <h1>Blog</h1>
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}/`} class="post-item" transition:name={`blog-${post.id}`}>
+            <div class="post-info">
+              <span class="post-title">{post.data.title}</span>
+              <p class="post-desc">{post.data.description}</p>
+            </div>
+            <time datetime={post.data.date.toISOString()}>
+              {post.data.date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .post-list {
+    list-style: none;
+  }
+
+  .post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1rem 0.75rem;
+    border-radius: 6px;
+    color: var(--color-text);
+    transition: background var(--transition-fast);
+  }
+
+  .post-item:hover {
+    background: rgba(0, 0, 0, 0.02);
+    color: var(--color-text);
+  }
+
+  .post-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .post-title {
+    font-weight: 600;
+    display: block;
+  }
+
+  .post-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+  }
+
+  time {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    margin-left: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .post-item {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    time {
+      margin-left: 0;
+    }
+  }
+</style>

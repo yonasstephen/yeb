@@ -1,0 +1,32 @@
+---
+import MarkdownLayout from '../../layouts/MarkdownLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<MarkdownLayout
+  title={project.data.title}
+  description={project.data.description}
+  date={project.data.date}
+  tags={project.data.tags}
+>
+  <h2 transition:name={`project-${project.id}`} style="display:none;">{project.data.title}</h2>
+  <Content />
+  {project.data.url && (
+    <p style="margin-top: 2rem;">
+      <a href={project.data.url} target="_blank" rel="noopener noreferrer">
+        View Source &rarr;
+      </a>
+    </p>
+  )}
+</MarkdownLayout>

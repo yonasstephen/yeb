@@ -1,0 +1,75 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags?: string[];
+  url?: string;
+  slug: string;
+}
+
+const { title, description, tags = [], url, slug } = Astro.props;
+---
+
+<a href={`/projects/${slug}/`} class="project-card">
+  <h3 transition:name={`project-${slug}`}>{title}</h3>
+  <p>{description}</p>
+  {tags.length > 0 && (
+    <div class="tags">
+      {tags.map((tag) => (
+        <span class="tag">{tag}</span>
+      ))}
+    </div>
+  )}
+</a>
+
+<style>
+  .project-card {
+    display: block;
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    color: var(--color-text);
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--color-bg);
+    border-radius: 4px;
+    color: var(--color-text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card:hover {
+      transform: none;
+    }
+  }
+</style>

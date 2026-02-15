@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<BaseLayout title="Projects | Yonas Stephen" description="Things I've built">
+  <section class="container page">
+    <h1>Projects</h1>
+    <div class="project-grid">
+      {projects.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          tags={project.data.tags}
+          url={project.data.url}
+          slug={project.id}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
