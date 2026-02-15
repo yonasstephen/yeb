@@ -26,9 +26,82 @@ const recentPosts = allPosts
       </p>
       <div class="hero-links">
         <a href="/projects/" class="hero-link">Projects</a>
-        <a href="/about/" class="hero-link">About Me</a>
+        <a href="/blog/" class="hero-link">Blog</a>
       </div>
     </div>
+  </section>
+
+  <section class="container section">
+    <h2 class="section-title">Experience</h2>
+    <ul class="experience-list">
+      <li class="experience-item">
+        <div class="exp-header">
+          <div class="exp-name">
+            <a href="https://www.meta.com" target="_blank" rel="noopener noreferrer"><img src="/images/meta-logo.svg" alt="Meta" class="exp-logo meta-logo" /></a>
+          </div>
+          <span class="exp-date">Jun 2022 - Present</span>
+        </div>
+        <div class="exp-timeline">
+          <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <p class="exp-role">Software Engineer @ MRS (Modern Recommendation Systems) <span class="exp-role-period">2026 - Present</span></p>
+              <p class="timeline-detail">Support teams to optimize GPU usage in training RecSys models</p>
+            </div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <p class="exp-role">Software Engineer @ Insider Trust <span class="exp-role-period">2023 - 2026</span></p>
+              <p class="timeline-detail">Build detection and prevent tools to protect Meta's most sensitive data</p>
+              <p class="timeline-detail">Developed a ML sensitivity scoring system to classify personal vs business files</p>
+              <p class="timeline-detail">Build automation to improve investigator efficiency</p>
+            </div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <p class="exp-role">Software Engineer @ Instagram ML Data Authoring <span class="exp-role-period">2022 - 2023</span></p>
+              <p class="timeline-detail">Build ML feature cost monitoring infra</p>
+              <p class="timeline-detail">Developed ML serving server cache optimization to save cost</p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="experience-item">
+        <div class="exp-header">
+          <div class="exp-name">
+            <a href="https://gojek.io" target="_blank" rel="noopener noreferrer"><img src="/images/gojek-logo.svg" alt="Gojek" class="exp-logo" /></a>
+          </div>
+          <span class="exp-date">Sep 2017 - May 2022</span>
+        </div>
+        <div class="exp-timeline">
+          <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <p class="exp-role">Senior Software Engineer @ Fraud Platform <span class="exp-role-period">2026 - Present</span></p>
+              <p class="timeline-detail">Tech lead for 5 engineers building realtime fraud detection and investigation platform</p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="experience-item">
+        <div class="exp-header">
+          <div class="exp-name">
+            <h3><a href="https://anacle.com" target="_blank" rel="noopener noreferrer">Anacle Systems</a></h3>
+          </div>
+          <span class="exp-date">Jul 2014 - Aug 2017</span>
+        </div>
+        <div class="exp-timeline">
+          <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <p class="exp-role">Software Engineer</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
   </section>
 
   {featuredProjects.length > 0 && (
@@ -190,6 +263,118 @@ const recentPosts = allPosts
     font-size: 0.9rem;
   }
 
+  .experience-list {
+    list-style: none;
+  }
+
+  .experience-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .experience-item:last-child {
+    border-bottom: none;
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .exp-name {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .exp-logo {
+    height: 20px;
+    width: auto;
+  }
+
+  .meta-logo {
+    height: 16px;
+  }
+
+  .exp-header h3 {
+    font-size: 1rem;
+  }
+
+  .exp-date {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+
+  .exp-timeline {
+    margin-top: 0.75rem;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .timeline-entry {
+    position: relative;
+    padding-bottom: 1.25rem;
+  }
+
+  .timeline-entry:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -1.5rem;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-border);
+    z-index: 1;
+  }
+
+  .timeline-entry:first-child .timeline-dot {
+    background: var(--color-accent);
+  }
+
+  .timeline-content {
+  }
+
+  .exp-role {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .exp-role-period {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+
+  .timeline-detail {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-top: 0.2rem;
+  }
+
   @media (max-width: 480px) {
     .hero-name {
       font-size: 2rem;
@@ -201,6 +386,14 @@ const recentPosts = allPosts
     }
 
     .post-item time {
+      margin-left: 0;
+    }
+
+    .exp-header {
+      flex-direction: column;
+    }
+
+    .exp-date {
       margin-left: 0;
     }
   }
