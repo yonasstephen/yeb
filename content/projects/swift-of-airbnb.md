@@ -6,6 +6,7 @@ tags:
   - ios
   - mobile
 url: https://github.com/yonasstephen/swift-of-airbnb
+github: yonasstephen/swift-of-airbnb
 featured: true
 date: 2017-01-01
 ---

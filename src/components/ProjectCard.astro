@@ -5,13 +5,24 @@ interface Props {
   tags?: string[];
   url?: string;
   slug: string;
+  stars?: number;
 }
 
-const { title, description, tags = [], url, slug } = Astro.props;
+const { title, description, tags = [], url, slug, stars } = Astro.props;
 ---
 
 <a href={`/projects/${slug}/`} class="project-card">
-  <h3 transition:name={`project-${slug}`}>{title}</h3>
+  <div class="card-header">
+    <h3 transition:name={`project-${slug}`}>{title}</h3>
+    {stars != null && stars > 0 && (
+      <span class="stars">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z" />
+        </svg>
+        {stars}
+      </span>
+    )}
+  </div>
   <p>{description}</p>
   {tags.length > 0 && (
     <div class="tags">
@@ -41,9 +52,28 @@ const { title, description, tags = [], url, slug } = Astro.props;
     color: var(--color-text);
   }
 
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
   h3 {
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .stars svg {
+    color: #f0a500;
   }
 
   p {

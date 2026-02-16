@@ -6,6 +6,21 @@ import { getCollection } from 'astro:content';
 const projects = (await getCollection('projects')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+
+const starCounts: Record<string, number> = {};
+await Promise.all(
+  projects
+    .filter((p) => p.data.github)
+    .map(async (p) => {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${p.data.github}`);
+        if (res.ok) {
+          const data = await res.json();
+          starCounts[p.id] = data.stargazers_count;
+        }
+      } catch {}
+    })
+);
 ---
 
 <BaseLayout title="Projects | Yonas Stephen" description="Things I've built">
@@ -19,6 +34,7 @@ const projects = (await getCollection('projects')).sort(
           tags={project.data.tags}
           url={project.data.url}
           slug={project.id}
+          stars={starCounts[project.id]}
         />
       ))}
     </div>

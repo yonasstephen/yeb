@@ -8,6 +8,22 @@ const featuredProjects = allProjects
   .filter((p) => p.data.featured)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
+// Fetch GitHub stars for projects
+const starCounts: Record<string, number> = {};
+await Promise.all(
+  featuredProjects
+    .filter((p) => p.data.github)
+    .map(async (p) => {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${p.data.github}`);
+        if (res.ok) {
+          const data = await res.json();
+          starCounts[p.id] = data.stargazers_count;
+        }
+      } catch {}
+    })
+);
+
 const allPosts = await getCollection('blog', ({ data }) => {
   return import.meta.env.PROD ? !data.draft : true;
 });
@@ -96,7 +112,9 @@ const recentPosts = allPosts
           <div class="timeline-entry">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <p class="exp-role">Software Engineer</p>
+              <p class="exp-role">Software Engineer<span class="exp-role-period">2014 - 2017</span></p>
+              <p class="timeline-detail">Led mobile app development for Enterprise Resource Planning (ERP) ecosystem</p>
+              <p class="timeline-detail">Led high stake POC mobile and web app to win a record tender project</p>
             </div>
           </div>
         </div>
@@ -115,6 +133,7 @@ const recentPosts = allPosts
             tags={project.data.tags}
             url={project.data.url}
             slug={project.id}
+            stars={starCounts[project.id]}
           />
         ))}
       </div>
