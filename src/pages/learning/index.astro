@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const courses = [
+  {
+    title: 'Attention, Explained',
+    description:
+      'A transformer course for software engineers: attention, embeddings, and how LLMs actually work.',
+    href: '/learning/transformer-course.html',
+    tags: ['transformers', 'llm', 'deep-learning'],
+  },
+  {
+    title: 'Actions Speak Louder',
+    description:
+      'A course for engineers on agents, tool use, and building systems that take action.',
+    href: '/learning/actions-speak-louder-course.html',
+    tags: ['ai-agents', 'tool-use', 'engineering'],
+  },
+];
+---
+
+<BaseLayout title="Learning | Yonas Stephen" description="Courses I've built">
+  <section class="container page">
+    <h1>Learning</h1>
+    <div class="course-grid">
+      {courses.map((course) => (
+        <a
+          href={course.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="course-card"
+        >
+          <h3>{course.title}</h3>
+          <p>{course.description}</p>
+          {course.tags.length > 0 && (
+            <div class="tags">
+              {course.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .course-card {
+    display: block;
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    color: var(--color-text);
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--color-bg);
+    border-radius: 4px;
+    color: var(--color-text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .course-card:hover {
+      transform: none;
+    }
+  }
+</style>
